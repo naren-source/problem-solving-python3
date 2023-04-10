@@ -3,7 +3,7 @@ def dec_bin(dec: int) -> int:
     pwr = 1
     while int(dec/2) != 0 :
         r = dec % 2
-        bin +=
+        # bin +=
         dec = int(dec / 2)
     return int(bin)
 
