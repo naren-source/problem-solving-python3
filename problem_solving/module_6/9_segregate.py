@@ -1,22 +1,25 @@
 def shift_right(list_items: list, start: int, end: int):
-    print(list_items, start, end)
-    for i in range(start, end):
-        print("shift ", i)
-        list_items[end - i] = list_items[end - i - 1]
-    print(list_items)
+    iterations = end - start
+    for itr in range(iterations):
+        list_items[end - itr] = list_items[end - itr - 1]
 
 
 def segregate_list(list_items: list) -> list:
     insert_pos = 0
+    zero_pos = -1
     for idx, i in enumerate(list_items):
+        if i == 0:
+            zero_pos = idx
         if i < 0:
-            print("i", i)
             if insert_pos != idx:
                 shift_right(list_items, insert_pos, idx)
                 list_items[insert_pos] = i
+                if zero_pos != -1 and (insert_pos < zero_pos < idx):
+                    zero_pos += 1
             insert_pos += 1
-            print(list_items)
-
+    if zero_pos != -1:
+        shift_right(list_items, insert_pos, zero_pos)
+        list_items[insert_pos] = 0
     return list_items
 
 
@@ -24,8 +27,8 @@ list_size = int(input())
 input_list = [0] * list_size
 input_list = [int(x) for x in input().split()]
 result_list = segregate_list(input_list)
-for i in result_list:
-    print(i, end=" ")
+for item in result_list:
+    print(item, end=" ")
 
 
 # ====================================
