@@ -1,16 +1,15 @@
-def checkEvenOrOdd(number):
-    # if number % 2 == 0:
-    #     return "EVEN"
-    # else:
-    #     return "ODD"
-    return "EVEN" if number % 2 == 0 else "ODD"
+def evenOrOdd(n):
+    return "EVEN" if n % 2 == 0 else "ODD"
 
 
-numberOfInputs = int(input())
-for i in range(numberOfInputs):
-    value = int(input())
-    print(checkEvenOrOdd(value))
+times = int(input())
+result = [None] * 3
+for i in range(times):
+    num = int(input())
+    result[i] = evenOrOdd(num)
 
+for i in result:
+    print(i)
 
 # ===================================================
 
