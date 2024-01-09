@@ -24,3 +24,28 @@ insert_element = int(input())
 return_list = insert_to_list(input_list, insert_element)
 for i in return_list:
     print(i, end=" ")
+
+
+
+#Write a program to insert an element in the array
+
+# Input Format
+#
+# Input will be the size and the elements
+#
+# Constraints
+#
+# 1<=size<=1000
+#
+# Output Format
+#
+# Print the array
+#
+# Sample Input 0
+#
+# 10
+# 1 5 18 28 33 39 47 73 77 84
+# 37
+# Sample Output 0
+#
+# 1 5 18 28 33 37 39 47 73 77 84
