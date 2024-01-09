@@ -10,6 +10,8 @@ name="nachu"
 print(name)
 print(name*2)
 
+print(f"{name} is good")
+
 
 a=12
 b=4
