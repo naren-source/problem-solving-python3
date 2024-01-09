@@ -1,9 +1,12 @@
 class BookShelf:
     def __init__(self, *books):
-        print(books)
+        # print(books)
         self.books = books
 
     def __str__(self):
+        for b in self.books:
+            print(b.name)
+
         return f"Booksehlf with {len(self.books)} books"
 
 

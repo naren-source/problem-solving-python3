@@ -1,14 +1,16 @@
 def divide(dividend: int, divisor: int) -> float:
-    if divisor == 0:
-        raise ZeroDivisionError("Divisor can't be zero")
+    # if divisor == 0:
+    #     raise ZeroDivisionError("Divisor can't be zero")
 
     return dividend/divisor
 
 
 grades: [] = [1, 2, 4, 5, 8]
 
+
 try:
-    average: float = divide(sum(grades), len(grades))
+    average: float = divide(sum(grades), 0)
+
 except ZeroDivisionError as e:
     print(e)
     print("Grade list is empty")
