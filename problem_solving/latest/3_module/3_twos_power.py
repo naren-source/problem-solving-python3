@@ -4,6 +4,7 @@ def checkTwosPower(n: int) -> str:
     #         return "YES"
     #     n /= 2
     # return "NO"
+    return
 
 
 inputs = int(input())
