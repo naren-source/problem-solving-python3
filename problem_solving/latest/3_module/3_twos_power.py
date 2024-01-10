@@ -1,10 +1,9 @@
 def checkTwosPower(n: int) -> str:
-    # while n >= 1:
-    #     if n == 2:
-    #         return "YES"
-    #     n /= 2
-    # return "NO"
-    return
+    while n >= 1:
+        if n == 2:
+            return "YES"
+        n /= 2
+    return "NO"
 
 
 inputs = int(input())
