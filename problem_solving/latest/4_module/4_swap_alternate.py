@@ -30,3 +30,23 @@ inputNumber = int(input())
 print(swap_alternate(inputNumber))
 
 
+# Write a 'C' program to swap the alternate digits of the given number
+#
+# Input Format
+#
+# input will have an integer
+#
+# Constraints
+#
+# 1 ≤ num ≤ 100000000
+#
+# Output Format
+#
+# Print the value
+#
+# Sample Input 0
+#
+# 54687
+# Sample Output 0
+#
+# 45867
