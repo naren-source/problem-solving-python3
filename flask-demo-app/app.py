@@ -5,7 +5,7 @@ from db import stores, items
 app = Flask(__name__)
 
 
-# http://127.0.0.1:5000/store - accessed this way
+# http://127.0.0.1:5000/store - to be accessed this way
 
 
 @app.get("/store")
