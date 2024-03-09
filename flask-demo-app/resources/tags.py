@@ -4,7 +4,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 import models
 from db import db
-from schemas import TagSchema
+from schemas import TagSchema, TagAndItemSchema
 
 blp = Blueprint("Tags", "tags", description="Operations on Tags")
 
@@ -38,3 +38,50 @@ class Tag(MethodView):
     def get(self, tag_id):
         tag = models.TagModel.query.get_or_404(tag_id)
         return tag
+
+    @blp.response(202, description="Deletes a tag if no item is tagged", example={"message"="Tag Deleted."})
+    @blp.alt_response(404, description="Tag Not Found")
+    @blp.alt_response(400, description="Returns if the tag is assigned to items. Tag not deleted")
+    def delete(self, tag_id):
+        tag = mpdelsTagModel.query.get_or_404(tag_id)
+        if not tag.items:
+            db.session.delete(tag)
+            db.session.commit()
+            return {"message": "Tag Deleted."}
+        abort(400, message="Couldnt delete. Tag has linked items")
+
+@blp.route("item/<string: item_id>/tag/<string:tag_id>")
+class LinkTagsToItem(MethodView):
+    @blp.response(201, TagSchema)
+    def post(self, item_id, tag_id):
+        item = ItemModel.query.get_or_404(item_id)
+        tag = TagModel.query.get_or_404(tag_id)
+
+        item.tags.append(tag)
+
+        try:
+            db.session.add(item)
+            db.session.commit()
+        except SQLAlchemyError:
+            abort(500, message="An error during tagging")
+        
+        return tag
+
+    @blp.response(201, TagAndItemSchema)
+    def delete(self, item_id, tag_id):
+        item = models.ItemModel.query.get_or_404(item_id)
+        tag = models.TagModel.query.get_or_404(tag_id)
+
+        item.tags.remove(tag)
+
+        try:
+            db.session.add(item)
+            db.session.commit()
+        except SQLAlchemyError:
+            abort(500, message="An error during delete tagging")
+        
+        return {
+            "message": "Removed",
+            "item": item,
+            "tag", tag
+        }
