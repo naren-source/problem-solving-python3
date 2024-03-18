@@ -39,18 +39,18 @@ class Tag(MethodView):
         tag = models.TagModel.query.get_or_404(tag_id)
         return tag
 
-    @blp.response(202, description="Deletes a tag if no item is tagged", example={"message"="Tag Deleted."})
+    @blp.response(202, description="Deletes a tag if no item is tagged", example={"message": "Tag deleted."})
     @blp.alt_response(404, description="Tag Not Found")
     @blp.alt_response(400, description="Returns if the tag is assigned to items. Tag not deleted")
     def delete(self, tag_id):
-        tag = mpdelsTagModel.query.get_or_404(tag_id)
+        tag = modelsTagModel.query.get_or_404(tag_id)
         if not tag.items:
             db.session.delete(tag)
             db.session.commit()
             return {"message": "Tag Deleted."}
         abort(400, message="Couldnt delete. Tag has linked items")
 
-@blp.route("item/<string: item_id>/tag/<string:tag_id>")
+@blp.route("/item/<string:item_id>/tag/<string:tag_id>")
 class LinkTagsToItem(MethodView):
     @blp.response(201, TagSchema)
     def post(self, item_id, tag_id):
@@ -83,5 +83,5 @@ class LinkTagsToItem(MethodView):
         return {
             "message": "Removed",
             "item": item,
-            "tag", tag
+            "tag": tag
         }
