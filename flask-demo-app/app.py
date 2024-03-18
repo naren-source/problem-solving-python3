@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_smorest import Api
+from flask_jwt_extended import JWTManager
 import os
+import secrets
 from db import db
 import models
 
@@ -26,6 +28,10 @@ def create_app(db_url=None):
     db.init_app(app)
 
     api = Api(app)
+
+    # app.config["JWT_SECRET_KEY"] = secrets.SystemRandom().getrandbits(128)
+    app.config["JWT_SECRET_KEY"] = "199147354889184238543979285757619692115"
+    jwt = JWTManager(app)
 
     # @app.before_first_request
     # def create_tables():
