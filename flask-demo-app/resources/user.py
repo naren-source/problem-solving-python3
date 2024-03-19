@@ -3,7 +3,9 @@ from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 
 from passlib.hash import pbkdf2_sha256
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt
 
+from blocklist import BLOCKLIST
 import models
 from db import db
 from sqlalchemy.exc import SQLAlchemyError
@@ -44,5 +46,30 @@ class User(MethodView):
         db.session.commit()
         return {"message": "User Deleted"}, 200
         
-       
+
+@blp.route("/login")
+class LoginUser(MethodView):
+    @blp.arguments(UserSchema)
+    def post(self, user_data):
+        user = models.UserModel.query.filter(
+            models.UserModel.username == user_data["username"]
+        ).first()
+
+        if user and pbkdf2_sha256.verify(user_data["password"], user.password):
+            access_token = create_access_token(identity=user.id)
+            return {
+                "access token": access_token
+            }
         
+        abort(401, message="Invalid Creds.")
+
+@blp.route("/logout")
+class LogoutUser(MethodView):
+    @jwt_required()
+    def post(self):
+       jti = get_jwt()['jti']
+       BLOCKLIST.add(jti)
+       return {
+        "message": "Logged out"
+       }, 201
+

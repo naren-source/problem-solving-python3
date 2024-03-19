@@ -1,10 +1,11 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_smorest import Api
 from flask_jwt_extended import JWTManager
 import os
 import secrets
 from db import db
 import models
+from blocklist import BLOCKLIST
 
 from resources.item import blp as ItemBlueprint
 from resources.store import blp as StoreBlueprint
@@ -33,6 +34,56 @@ def create_app(db_url=None):
     # app.config["JWT_SECRET_KEY"] = secrets.SystemRandom().getrandbits(128)
     app.config["JWT_SECRET_KEY"] = "199147354889184238543979285757619692115"
     jwt = JWTManager(app)
+
+
+    @jwt.token_in_blocklist_loader
+    def check_if_token_in_blocklist(jwt_header, jwt_payload):
+        return jwt_payload["jti"] in BLOCKLIST
+
+    @jwt.revoked_token_loader
+    def revoked_token_callback(jwt_header, jwt_payload):
+        return (
+            jsonify({"message": "User has logged out. Token has revoked.", "error": "token_revoked"}), 
+            401,
+        )
+
+    @jwt.additional_claims_loader
+    def add_claims_to_jwt(identity):
+        if identity == 2:
+            return {
+                "is_admin": True
+            }
+        return {
+            "is_admin": False
+        }
+
+    @jwt.expired_token_loader
+    def expired_token_callback(jwt_header, jwt_payload):
+        return (
+            jsonify({"message": "Token has expired.", "error": "token_expired"}), 
+            401,
+        )
+    
+    @jwt.invalid_token_loader
+    def invalid_token_callback(error):
+        return (
+            jsonify(
+                {"message": "Sign Verify Failed", "error": "invalid token"}
+            ), 
+            401,
+        )
+
+    @jwt.unauthorized_loader
+    def missing_token_callback(error):
+        return (
+            jsonify(
+                {
+                    "description": "Missing Token", 
+                    "error": "authorizationz_required"
+                }
+            ), 
+            401,
+        )
 
     # @app.before_first_request
     # def create_tables():
