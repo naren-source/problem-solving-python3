@@ -31,7 +31,7 @@ class TagsInStore(MethodView):
         return tag
 
 
-@blp.route("/tag/<string:tag_id>")
+@blp.route("/tag/<int:tag_id>")
 class Tag(MethodView):
     
     @blp.response(200, TagSchema)
@@ -50,7 +50,7 @@ class Tag(MethodView):
             return {"message": "Tag Deleted."}
         abort(400, message="Couldnt delete. Tag has linked items")
 
-@blp.route("/item/<string:item_id>/tag/<string:tag_id>")
+@blp.route("/item/<int:item_id>/tag/<int:tag_id>")
 class LinkTagsToItem(MethodView):
     @blp.response(201, TagSchema)
     def post(self, item_id, tag_id):

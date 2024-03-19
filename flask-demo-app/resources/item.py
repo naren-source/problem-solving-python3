@@ -10,14 +10,14 @@ from flask_jwt_extended import jwt_required, get_jwt
 blp = Blueprint("items", __name__, description="Operations on items")
 
 
-@blp.route("/item/<string:item_id>")
+@blp.route("/item/<int:item_id>")
 class Item(MethodView):
     @blp.response(200, ItemSchema)
     def get(self, item_id):
         item = models.ItemModel.query.get_or_404(item_id)
         return item
 
-    @jwt_required()
+    @jwt_required(fresh=True)
     def delete(self, item_id):
         jwt = get_jwt()
         print(jwt)
