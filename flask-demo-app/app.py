@@ -6,6 +6,7 @@ import secrets
 from db import db
 import models
 from blocklist import BLOCKLIST
+from flask_migrate import Migrate
 
 from resources.item import blp as ItemBlueprint
 from resources.store import blp as StoreBlueprint
@@ -28,6 +29,8 @@ def create_app(db_url=None):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)
+
+    migrate = Migrate(app,db)
 
     api = Api(app)
 
@@ -96,8 +99,8 @@ def create_app(db_url=None):
     # def create_tables():
     #     db.create_all()
 
-    with app.app_context():
-        db.create_all()
+    # with app.app_context():
+    #     db.create_all()
 
     api.register_blueprint(StoreBlueprint)
     api.register_blueprint(ItemBlueprint)
