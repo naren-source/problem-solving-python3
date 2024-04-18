@@ -37,3 +37,24 @@ def removeExtraSpace(iStr: str) -> str:
 
 
 print(removeExtraSpace(input()))
+
+# Write a program to remove all the extra spaces from the given string
+#
+# Input Format
+#
+# Given a string
+#
+# Constraints
+#
+# 1<=length<=1000 only one space is allowed for each word
+#
+# Output Format
+#
+# Print the string with no extra spaces
+#
+# Sample Input 0
+#
+# TqdvNiH UuJppK        zRCDppt     tKbQjwu     VPCDpqK        LbGSMx
+# Sample Output 0
+#
+# TqdvNiH UuJppK zRCDppt tKbQjwu VPCDpqK LbGSMx
