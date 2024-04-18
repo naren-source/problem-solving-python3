@@ -1,3 +1,12 @@
+def printWithSpace(iStr: str) -> None:
+    for x in iStr:
+        print(x, end=" ")
+
+
+inputStr = input()
+printWithSpace(inputStr)
+
+
 # Write a program to traverse the string and print each character separated by space
 #
 # Input Format
