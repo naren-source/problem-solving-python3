@@ -28,6 +28,13 @@ class BinarySearchTree:
                 return
             self.insertMe(node, root.right)
 
+    def deleteMe(self, data, root):
+        pass
+    def findRightMinimum(self, root):
+        while root.left:
+            root = root.left
+        return root
+
     def searchMe(self, data, root):
         if  root is None or root.data == data:
             return root
