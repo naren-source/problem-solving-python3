@@ -29,7 +29,21 @@ class BinarySearchTree:
             self.insertMe(node, root.right)
 
     def deleteMe(self, data, root):
-        pass
+        if data < root.data:
+            root.left = self.deleteMe(data, root.left)
+        elif data > root.data:
+            root.right = self.deleteMe(data, root.right)
+        else:
+            if root.left is None:
+                return root.right
+            elif root.right is None:
+                return root.left
+            else:
+                rightMinNode = self.findRightMinimum(root)
+                root.data = rightMinNode.data
+                root.right = self.deleteMe(root.data, root.right)
+        return root
+
     def findRightMinimum(self, root):
         while root.left:
             root = root.left
@@ -60,11 +74,5 @@ bst.insertNode(60)
 bst.insertNode(80)
 bst.inorderTraversal(bst.root)
 print()
-print(
-    (bst.searchMe(60, bst.root)).data if bst.searchMe(60, bst.root) \
-        else False
-)
-print(
-    (bst.searchMe(90, bst.root)).data if bst.searchMe(90, bst.root) \
-        else False
-)
+bst.root = bst.deleteMe(60,bst.root)
+bst.inorderTraversal(bst.root)
