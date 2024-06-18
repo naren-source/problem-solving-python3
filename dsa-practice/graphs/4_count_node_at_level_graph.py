@@ -15,7 +15,7 @@ class Graph:
     def addEdge(self, src, dest, weight=1):
         if src in self.verticesList and dest in self.verticesList:
             self.verticesList[src].connected_to[dest] = weight
-            self.verticesList[dest].connected_to[src] = weight  # Assuming undirected graph
+            self.verticesList[dest].connected_to[src] = weight
 
     def countNodesAtLevel(self, root, targetLevel):
         queue = [(root, 0)]
@@ -32,7 +32,6 @@ class Graph:
         return countNodes
 
 
-# Example usage
 graph = Graph()
 graph.addVertex('a')
 graph.addVertex('b')
