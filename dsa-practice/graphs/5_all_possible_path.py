@@ -40,6 +40,7 @@ class DirectedGraph:
         self.countTotalPathUtil(source, destination, self.visitedMap)
         return self.totalPathCount
 
+
 dGraph = DirectedGraph()
 verticesList = ['a', 'b', 'c', 'd', 'e']
 for vertex in verticesList:
@@ -55,4 +56,4 @@ edgesList = [
 ]
 for src, dest in edgesList:
     dGraph.setEdge(src, dest)
-print(dGraph.countTotalPath('a','e'))
+print(dGraph.countTotalPath('a', 'e'))
