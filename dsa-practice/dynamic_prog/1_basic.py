@@ -10,10 +10,8 @@ def fibonacci_naive(n):
 
 
 def fibonacci_recursive(n):
-    if n == 1:
-        return 1
-    if n == 0:
-        return 0
+    if n == 1 or n == 0:
+        return n
     return fibonacci_recursive(n-1) + fibonacci_recursive(n-2)
 
 
@@ -31,10 +29,8 @@ def fibonacci_memoization(n, memo=None):
     if n in memo:
         return memo[n]
 
-    if n == 1:
-        return 1
-    if n == 0:
-        return 0
+    if n == 1 or n == 0:
+        return n
 
     memo[n] = fibonacci_memoization(n-1, memo) + fibonacci_memoization(n-2, memo)
     return memo[n]
