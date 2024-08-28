@@ -24,7 +24,7 @@ def fibonacci_tabulation(n):
 
 
 def fibonacci_memoization(n, memo=None):
-    if not memo:
+    if not memo: 
         memo = {}
     if n in memo:
         return memo[n]
